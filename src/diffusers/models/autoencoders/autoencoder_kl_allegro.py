@@ -763,6 +763,10 @@ class AutoencoderKLAllegro(ModelMixin, ConfigMixin):
         sample_size: int = 320,
         scaling_factor: float = 0.13,
         force_upcast: bool = True,
+        tile_overlap_t: int = 8,
+        tile_overlap_h: int = 120,
+        tile_overlap_w: int = 80,
+        sample_frames: int = 24,
     ) -> None:
         super().__init__()
 
@@ -797,10 +801,10 @@ class AutoencoderKLAllegro(ModelMixin, ConfigMixin):
         self.use_tiling = False
 
         self.spatial_compression_ratio = 2 ** (len(block_out_channels) - 1)
-        self.tile_overlap_t = 8
-        self.tile_overlap_h = 120
-        self.tile_overlap_w = 80
-        sample_frames = 24
+        self.tile_overlap_t = tile_overlap_t
+        self.tile_overlap_h = tile_overlap_h
+        self.tile_overlap_w = tile_overlap_w
+        self.sample_frames = sample_frames
 
         self.kernel = (sample_frames, sample_size, sample_size)
         self.stride = (
